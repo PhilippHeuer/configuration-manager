@@ -1,0 +1,28 @@
+// plugins
+apply plugin: 'org.springframework.boot'
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	// Modules
+	compile project(':' + rootProject.name + '-core')
+	compile project(':' + rootProject.name + '-db-mongo')
+
+	// Spring Boot
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter'
+
+	// Args4J
+	compile group: 'args4j', name: 'args4j', version: '2.33'
+}
+
+// Artifact Info
+project.ext {
+	artifactName = 'ConfigurationManager-Deploy'
+	artifactDescription = 'CLI Deployment Tool to update configurations in a StorageBackend.'
+}
+
+/**
+ * Artifact
+ */
+group = project.groupId
+description = project.artifactDescription
+version = project.artifactVersion

@@ -1,0 +1,8 @@
+# Storage Backend
+storage:
+  # Type
+  type: mongo
+  # Server Url
+  server: mongodb://root:example@localhost:27017
+  database: configdb
+  collectionName: configuration

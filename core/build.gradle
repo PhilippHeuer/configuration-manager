@@ -1,0 +1,15 @@
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	// Jackson (JSON)
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml'
+}
+
+// Artifact Info
+project.ext {
+	artifactName = 'ConfigurationManager-Core'
+	artifactDescription = 'Configuration Manager Core'
+}
+
+// Deployment Script
+apply from: '../deployment.gradle'

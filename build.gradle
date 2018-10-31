@@ -1,0 +1,93 @@
+// Plugins
+plugins {
+	id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+	id 'com.jfrog.bintray' version '1.8.4'
+	id 'com.jfrog.artifactory' version '4.8.1'
+	id 'org.springframework.boot' version '2.0.6.RELEASE' apply false
+}
+
+// All-Projects
+allprojects {
+	// Repositories
+	repositories {
+		jcenter()
+		maven { url "https://dl.bintray.com/philippheuer/maven" }
+	}
+
+	// Artifact Info
+	project.ext {
+		groupId = 'com.github.philippheuer'
+		artifactNamespace = 'philippheuer'
+		artifactName = 'configurationmanager'
+		artifactVersion = String.valueOf(System.getenv("CI_COMMIT_REF_NAME")).replace("v", "") + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+		artifactDescription = 'ConfigurationManager'
+		websiteUrl = 'https://github.com/philippheuer/configurationmanager'
+		issueTrackerUrl = 'https://github.com/philippheuer/configurationmanager/issues'
+		vcsUrl = 'https://github.com/philippheuer/configurationmanager.git'
+	}
+}
+
+// Subprojects
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'maven-publish'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'com.jfrog.bintray'
+	apply plugin: 'com.jfrog.artifactory'
+
+	// Source Compatiblity
+	sourceCompatibility = 1.8
+
+	// Dependency Management for Subprojects
+	dependencyManagement {
+		dependencies {
+			// Logging
+			dependency group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+			dependency group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+			// Apache Commons
+			dependency group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+			dependency group: 'commons-io', name: 'commons-io', version: '2.6'
+
+			// Jackson (JSON)
+			dependency group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
+			dependency group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.7'
+
+			// Testing
+			dependency group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
+			dependency group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.1'
+
+			// Lombok
+			dependency group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+
+			// Db - Mongo
+			dependency group: 'org.mongodb', name: 'mongodb-driver-core', version: '3.8.2'
+			dependency group: 'org.mongodb', name: 'mongodb-driver-sync', version: '3.8.2'
+			dependency group: 'org.mongodb', name: 'bson', version: '3.8.2'
+		}
+	}
+
+	// Common Dependencies
+	plugins.withType(JavaPlugin) {
+		dependencies {
+			// Logging
+			compile group: 'org.slf4j', name: 'slf4j-api'
+			testCompile group: 'ch.qos.logback', name: 'logback-classic'
+
+			// Apache Commons
+			compile group: 'org.apache.commons', name: 'commons-lang3'
+			compile group: 'commons-io', name: 'commons-io'
+
+			// Test
+			testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api'
+			testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+
+			// Getter & Setter
+			compileOnly group: 'org.projectlombok', name: 'lombok'
+			testCompile group: 'org.projectlombok', name: 'lombok'
+			annotationProcessor group: 'org.projectlombok', name: 'lombok'
+		}
+	}
+}

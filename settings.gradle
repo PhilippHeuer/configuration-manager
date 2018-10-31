@@ -1,0 +1,6 @@
+include 'core', 'db-mongo', 'cli-deploy'
+
+rootProject.name = 'configurationmanager'
+rootProject.children.each {
+	it.name = rootProject.name + "-" + it.name
+}
