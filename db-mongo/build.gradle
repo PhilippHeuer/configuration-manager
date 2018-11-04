@@ -1,12 +1,12 @@
 // In this section you declare the dependencies for your production and test code
 dependencies {
-	// Modules
-	compile project(':' + rootProject.name + '-core')
-
 	// MongoDb
 	compile group: 'org.mongodb', name: 'mongodb-driver-core'
 	compile group: 'org.mongodb', name: 'mongodb-driver-sync'
 	compile group: 'org.mongodb', name: 'bson'
+
+	// Modules
+	compile project(':' + rootProject.name + '-core')
 }
 
 // Artifact Info

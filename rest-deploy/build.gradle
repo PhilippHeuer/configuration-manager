@@ -1,0 +1,44 @@
+// plugins
+apply plugin: 'org.springframework.boot'
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	// Servlet API
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+
+	// Spring Boot - Web
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+
+	// Micrometer
+	compile group: 'io.micrometer', name: 'micrometer-registry-influx', version: '1.0.3'
+
+	// SpringFox (Swagger)
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
+	compile group: 'io.springfox', name: 'springfox-bean-validators', version: '2.8.0'
+	compile group: 'io.springfox', name: 'springfox-data-rest', version: '2.8.0'
+
+	// Spring Boot - Test
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+
+	// Modules
+	compile project(':' + rootProject.name + '-core')
+	compile project(':' + rootProject.name + '-db-mongo')
+	compile project(':' + rootProject.name + '-db-postgres')
+	compile project(':' + rootProject.name + '-db-mysql')
+}
+
+// Artifact Info
+project.ext {
+	artifactName = 'ConfigurationManager-Rest'
+	artifactDescription = 'Rest Service to read/update configurations in a StorageBackend.'
+}
+
+/**
+ * Artifact
+ */
+group = project.groupId
+description = project.artifactDescription
+version = project.artifactVersion

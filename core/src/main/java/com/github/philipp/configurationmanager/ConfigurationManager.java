@@ -1,7 +1,7 @@
 package com.github.philipp.configurationmanager;
 
 import com.github.philipp.configurationmanager.api.IConfigurationStorageBackend;
-import com.github.philipp.configurationmanager.domain.ConfigurationItem;
+import com.github.philipp.configurationmanager.domain.ConfigurationEntry;
 
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class ConfigurationManager {
      * @param name        config name
      * @return Document configuration
      */
-    public Optional<ConfigurationItem> getConfiguration(String environment, String name) {
+    public Optional<ConfigurationEntry> getConfiguration(String environment, String name) {
         return storageBackend.getConfiguration(environment, name);
     }
 
@@ -39,7 +39,7 @@ public class ConfigurationManager {
      * @param name        config name
      * @param config      config body
      */
-    public void storeConfiguration(String environment, String name, ConfigurationItem config) {
+    public void storeConfiguration(String environment, String name, ConfigurationEntry config) {
         storageBackend.storeConfiguration(environment, name, config);
     }
 

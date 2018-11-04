@@ -1,4 +1,4 @@
-include 'core', 'db-mongo', 'cli-deploy'
+include 'core', 'db-mongo', 'db-postgres', 'db-mysql', 'cli-deploy', 'rest-deploy'
 
 rootProject.name = 'configurationmanager'
 rootProject.children.each {

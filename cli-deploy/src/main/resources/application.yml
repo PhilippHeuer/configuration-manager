@@ -4,5 +4,7 @@ storage:
   type: mongo
   # Server Url
   server: mongodb://root:example@localhost:27017
+  username: ""
+  password: ""
   database: configdb
-  collectionName: configuration
+  table: configuration

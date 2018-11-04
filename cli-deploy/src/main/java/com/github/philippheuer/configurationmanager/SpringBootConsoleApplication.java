@@ -2,8 +2,8 @@ package com.github.philippheuer.configurationmanager;
 
 import com.github.philipp.configurationmanager.ConfigurationManager;
 import com.github.philipp.configurationmanager.ConfigurationManagerBuilder;
+import com.github.philipp.configurationmanager.domain.ConfigurationEntry;
 import com.github.philipp.configurationmanager.domain.ConfigurationFormat;
-import com.github.philipp.configurationmanager.domain.ConfigurationItem;
 import com.github.philippheuer.configurationmanager.storage.MongoDbStorageBackend;
 import lombok.extern.java.Log;
 import org.kohsuke.args4j.CmdLineException;
@@ -75,7 +75,7 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
         ConfigurationManager configurationManager = null;
         if (storageType.equalsIgnoreCase("mongo")) {
             configurationManager = ConfigurationManagerBuilder.builder()
-                .withStorageBackend(new MongoDbStorageBackend(env.getProperty("storage.server"), env.getProperty("storage.database"), env.getProperty("storage.collectionName")))
+                .withStorageBackend(new MongoDbStorageBackend(env.getProperty("storage.server"), env.getProperty("storage.database"), env.getProperty("storage.table")))
                 .build();
         }
 
@@ -86,12 +86,12 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
                 String fileContent = new String(Files.readAllBytes(Paths.get(configFilename)), StandardCharsets.UTF_8);
                 log.info("Loading file [" + Paths.get(configFilename).toAbsolutePath() + "]");
 
-                ConfigurationItem configItem = new ConfigurationItem("1", ConfigurationFormat.YAML, fileContent);
+                ConfigurationEntry configItem = new ConfigurationEntry("1", ConfigurationFormat.YAML, fileContent);
                 configurationManager.storeConfiguration(configEnvironment, configKey, configItem);
                 log.info(String.format("Stored configuration [%s:%s] in storage backend!", configEnvironment, configKey));
             } else if (configAction.equalsIgnoreCase("read")) {
                 // read
-                Optional<ConfigurationItem> config = configurationManager.getConfiguration(configEnvironment, configKey);
+                Optional<ConfigurationEntry> config = configurationManager.getConfiguration(configEnvironment, configKey);
                 log.info(String.format("Config content of [%s:%s] is: %s", configEnvironment, configKey, config.toString()));
             }
 

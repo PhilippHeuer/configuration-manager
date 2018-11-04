@@ -1,6 +1,6 @@
 package com.github.philipp.configurationmanager.api;
 
-import com.github.philipp.configurationmanager.domain.ConfigurationItem;
+import com.github.philipp.configurationmanager.domain.ConfigurationEntry;
 
 import java.util.Optional;
 
@@ -16,7 +16,7 @@ public interface IConfigurationStorageBackend {
      * @param name        config name
      * @return Document configuration
      */
-    Optional<ConfigurationItem> getConfiguration(String environment, String name);
+    Optional<ConfigurationEntry> getConfiguration(String environment, String name);
 
     /**
      * Store Configuration
@@ -25,6 +25,6 @@ public interface IConfigurationStorageBackend {
      * @param name        config name
      * @param config      config body
      */
-    void storeConfiguration(String environment, String name, ConfigurationItem config);
+    void storeConfiguration(String environment, String name, ConfigurationEntry config);
 
 }

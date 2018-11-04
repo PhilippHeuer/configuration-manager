@@ -1,0 +1,75 @@
+# Logging
+logging:
+  pattern:
+    console: "%d %-5level [%X{requestId}] %logger : %msg%n"
+    file: "%d %-5level [%X{requestId}] %logger : %msg%n"
+  level:
+    root: WARN
+
+### - Template - ###
+# WebServer
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+
+# Management
+management:
+  # Security
+  security:
+    enabled: false
+  # Endpoints
+  endpoints:
+    enabled-by-default: true
+    web:
+      # Base Path
+      base-path: /management
+      path-mapping:
+        info: info
+        health: health
+        metrics: metrics
+      # Web Endpoints
+      exposure:
+        include: info, health, metrics
+      # CORS
+      cors:
+        allowed-origins: "*"
+        allowed-methods: GET,POST
+  # Metric Export
+  metrics:
+    export:
+      influx:
+        enabled: false
+        db: spring-boot
+        step: 15s
+
+# Swagger Documentation
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
+# Storage Backend
+storage:
+  # MongoDb
+  type: mongo
+  server: mongodb://localhost:27017
+  username: ""
+  password: ""
+  database: configdb
+  table: configuration
+  # PostgresDb
+  #type: postgres
+  #server: jdbc:postgresql://localhost:5432/db
+  #username: "user"
+  #password: "password"
+  #database: db
+  #table: configuration
+  # MySQL
+  #type: mysql
+  #server: jdbc:mysql://localhost:3306/db
+  #username: "user"
+  #password: "password"
+  #database: db
+  #table: configuration

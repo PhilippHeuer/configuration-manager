@@ -1,0 +1,19 @@
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	// Database
+	compile group: 'com.zaxxer', name: 'HikariCP'
+	compile group: 'org.liquibase', name: 'liquibase-core'
+	compile group: 'mysql', name: 'mysql-connector-java'
+
+	// Modules
+	compile project(':' + rootProject.name + '-core')
+}
+
+// Artifact Info
+project.ext {
+	artifactName = 'ConfigurationManager-MySQL'
+	artifactDescription = 'MySQL Storage Backend for the ConfigurationManager'
+}
+
+// Deployment Script
+apply from: '../deployment.gradle'

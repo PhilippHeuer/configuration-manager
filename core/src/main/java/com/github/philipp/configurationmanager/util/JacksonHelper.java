@@ -6,7 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 /**
  * Jackson Utils
  */
-public class JacksonUtils {
+public class JacksonHelper {
 
     /**
      * Gets a JSON ObjectMapper

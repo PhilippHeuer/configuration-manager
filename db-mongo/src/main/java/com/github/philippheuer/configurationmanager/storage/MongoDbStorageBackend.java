@@ -1,9 +1,10 @@
 package com.github.philippheuer.configurationmanager.storage;
 
 import com.github.philipp.configurationmanager.api.IConfigurationStorageBackend;
-import com.github.philipp.configurationmanager.domain.ConfigurationItem;
-import com.github.philipp.configurationmanager.util.JacksonUtils;
+import com.github.philipp.configurationmanager.domain.ConfigurationEntry;
+import com.github.philipp.configurationmanager.util.JacksonHelper;
 import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -58,16 +59,16 @@ public class MongoDbStorageBackend implements IConfigurationStorageBackend {
      * @param name        config name
      * @return Document configuration
      */
-    public Optional<ConfigurationItem> getConfiguration(String environment, String name) {
+    public Optional<ConfigurationEntry> getConfiguration(String environment, String name) {
         try {
             // load document
             Document document = collection.find(and(eq("environment", environment), eq("name", name))).first();
 
             // mapping
-            ConfigurationItem configurationItem = JacksonUtils.getObjectMapper().readValue(document.get("configurationBody").toString(), ConfigurationItem.class);
+            ConfigurationEntry configurationEntry = JacksonHelper.getObjectMapper().readValue(document.get("configurationBody").toString(), ConfigurationEntry.class);
 
             // respond
-            return Optional.ofNullable(configurationItem);
+            return Optional.ofNullable(configurationEntry);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -80,17 +81,24 @@ public class MongoDbStorageBackend implements IConfigurationStorageBackend {
      *
      * @param environment environment name
      * @param name        config name
+     * @param config      configuration object
      */
-    public void storeConfiguration(String environment, String name, ConfigurationItem config) {
+    public void storeConfiguration(String environment, String name, ConfigurationEntry config) {
         try {
             // initialize document with meta information
             Document document = new Document("name", name)
                 .append("environment", environment);
             // map config into the document
-            document = document.append("configurationBody", JacksonUtils.getObjectMapper().writeValueAsString(config));
+            document = document.append("configurationBody", JacksonHelper.getObjectMapper().writeValueAsString(config));
 
             // store
-            collection.insertOne(document);
+            Document exists = collection.find(and(eq("environment", environment), eq("name", name))).first();
+            if (exists != null) {
+                collection.replaceOne(and(eq("environment", environment), eq("name", name)), document);
+            } else {
+                collection.insertOne(document);
+            }
+
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
