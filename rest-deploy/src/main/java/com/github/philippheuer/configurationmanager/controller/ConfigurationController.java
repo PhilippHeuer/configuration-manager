@@ -31,7 +31,7 @@ public class ConfigurationController {
     @RequestMapping(value = "/config", method = RequestMethod.GET)
     public ResponseEntity<ConfigurationEntry> getConfig(
         @RequestParam(value = "environment", required = true) String environment,
-        @RequestParam(value = "id", required = true) String configId
+        @RequestParam(value = "name", required = true) String configId
     ) {
         // load configuration
         Optional<ConfigurationEntry> configurationEntry = configurationManager.getConfiguration(environment, configId);
@@ -50,7 +50,7 @@ public class ConfigurationController {
     @RequestMapping(value = "/config", method = RequestMethod.POST)
     public ResponseEntity<Object> storeConfig(
             @RequestParam(value = "environment", required = true) String environment,
-            @RequestParam(value = "id", required = true) String configId,
+            @RequestParam(value = "name", required = true) String configId,
             @RequestBody ConfigurationEntry body
     		) {
         // store configuration

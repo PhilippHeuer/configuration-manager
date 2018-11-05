@@ -6,6 +6,8 @@ dependencies {
 	// Modules
 	compile project(':' + rootProject.name + '-core')
 	compile project(':' + rootProject.name + '-db-mongo')
+	compile project(':' + rootProject.name + '-db-mysql')
+	compile project(':' + rootProject.name + '-db-postgres')
 
 	// Spring Boot
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter'

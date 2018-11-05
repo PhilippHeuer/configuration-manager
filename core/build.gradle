@@ -3,6 +3,9 @@ dependencies {
 	// Jackson (JSON)
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
 	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml'
+
+	// HTTP Client
+	compile group: 'com.squareup.okhttp3', name: 'okhttp'
 }
 
 // Artifact Info

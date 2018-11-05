@@ -4,7 +4,10 @@ import com.github.philipp.configurationmanager.ConfigurationManager;
 import com.github.philipp.configurationmanager.ConfigurationManagerBuilder;
 import com.github.philipp.configurationmanager.domain.ConfigurationEntry;
 import com.github.philipp.configurationmanager.domain.ConfigurationFormat;
+import com.github.philipp.configurationmanager.storage.RestStorageBackend;
 import com.github.philippheuer.configurationmanager.storage.MongoDbStorageBackend;
+import com.github.philippheuer.configurationmanager.storage.MySQLStorageBackend;
+import com.github.philippheuer.configurationmanager.storage.PostgresDbStorageBackend;
 import lombok.extern.java.Log;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -76,6 +79,18 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
         if (storageType.equalsIgnoreCase("mongo")) {
             configurationManager = ConfigurationManagerBuilder.builder()
                 .withStorageBackend(new MongoDbStorageBackend(env.getProperty("storage.server"), env.getProperty("storage.database"), env.getProperty("storage.table")))
+                .build();
+        }  else if (storageType.equalsIgnoreCase("postgres")) {
+            configurationManager = ConfigurationManagerBuilder.builder()
+                .withStorageBackend(new PostgresDbStorageBackend(env.getProperty("storage.server"), env.getProperty("storage.username"), env.getProperty("storage.password"), env.getProperty("storage.database"), env.getProperty("storage.table")))
+                .build();
+        } else if (storageType.equalsIgnoreCase("mysql")) {
+            configurationManager = ConfigurationManagerBuilder.builder()
+                .withStorageBackend(new MySQLStorageBackend(env.getProperty("storage.server"), env.getProperty("storage.username"), env.getProperty("storage.password"), env.getProperty("storage.database"), env.getProperty("storage.table")))
+                .build();
+        } else if (storageType.equalsIgnoreCase("rest")) {
+            configurationManager = ConfigurationManagerBuilder.builder()
+                .withStorageBackend(new RestStorageBackend(env.getProperty("storage.server")))
                 .build();
         }
 
