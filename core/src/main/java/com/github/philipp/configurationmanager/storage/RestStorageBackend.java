@@ -65,6 +65,7 @@ public class RestStorageBackend implements IConfigurationStorageBackend {
                 // respond
                 return Optional.ofNullable(configurationEntry);
             }
+            response.close();
         } catch (Exception ex) {
             log.error(String.format("Failed to load configuration [%s:%s] from storage backend %s! Error: %s", environment, name, getClass().getSimpleName(), ex.getMessage()));
             ex.printStackTrace();
@@ -99,6 +100,7 @@ public class RestStorageBackend implements IConfigurationStorageBackend {
             if (!response.isSuccessful()) {
                 throw new RuntimeException("HttpClientError - " + response.code() + ": " + response.body().string());
             }
+            response.close();
         } catch (Exception ex) {
             log.error(String.format("Failed to store configuration [%s:%s] into storage backend %s! Error: %s", environment, name, getClass().getSimpleName(), ex.getMessage()));
             throw new RuntimeException(ex);

@@ -98,7 +98,6 @@ public class MongoDbStorageBackend implements IConfigurationStorageBackend {
             } else {
                 collection.insertOne(document);
             }
-
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

@@ -70,9 +70,7 @@ Assemble REST Docker Container:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   - docker push $CI_REGISTRY_IMAGE/rest:$CI_COMMIT_REF_SLUG
 
-###
 # Pre-Release
-###
 Publish Prerelease:
   stage: publishStage
   script:
@@ -83,9 +81,7 @@ Publish Prerelease:
   - /^v[0-9]+\.[0-9]+\.[0-9]+\-beta\.[0-9]+$/
   - /^v[0-9]+\.[0-9]+\.[0-9]+\-rc\.[0-9]+$/
 
-###
 # Stable Release
-###
 Publish Release:
   stage: publishStable
   script:

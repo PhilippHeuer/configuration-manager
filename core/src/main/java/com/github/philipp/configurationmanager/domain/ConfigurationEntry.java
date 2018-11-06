@@ -25,6 +25,6 @@ public class ConfigurationEntry {
     /**
      * Body
      */
-    private Object body;
+    private String body;
 
 }

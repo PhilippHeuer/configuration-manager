@@ -51,7 +51,7 @@ subprojects {
 			dependency group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
 			dependency group: 'commons-io', name: 'commons-io', version: '2.6'
 
-			// Jackson (JSON)
+			// Jackson
 			dependency group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.7'
 			dependency group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.7'
 
