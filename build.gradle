@@ -16,7 +16,7 @@ allprojects {
 
 	// Artifact Info
 	project.ext {
-		groupId = 'com.github.philippheuer'
+		groupId = 'com.github.philippheuer.configurationmanager'
 		artifactNamespace = 'philippheuer'
 		artifactName = 'configurationmanager'
 		artifactVersion = String.valueOf(System.getenv("CI_COMMIT_REF_NAME")).replace("v", "") + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
